@@ -1,0 +1,14 @@
+---
+- name: Setup a new node
+  # Requires a target to be set. If no target is defined, nothing is
+  hosts: "{{ target | default('no_host') }}"
+  become: yes
+  tasks:
+    - name: Get updates
+      apt:
+        update_cache: yes
+
+    - name: Install updates
+      apt:
+        name: "*"
+        state: latest

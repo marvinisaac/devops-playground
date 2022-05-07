@@ -1,0 +1,27 @@
+---
+- name: Setup static IP
+  # Requires a target to be set. If no target is defined, nothing is
+  hosts: "{{ target | default('no_host') }}"
+  become: yes
+  tasks:
+    - name: Disable cloud init
+      ansible.builtin.copy:
+        src: ./setup-static-ip/config.cfg
+        dest: /etc/cloud/cloud.cfg.d/subiquity-disable-cloudinit-networking.cfg
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Copy template config
+      ansible.builtin.copy:
+        src: ./setup-static-ip/config.yaml
+        dest: /etc/netplan/00-installer-config.yaml
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Set static IP
+      ansible.builtin.lineinfile:
+        path: /etc/netplan/00-installer-config.yaml
+        search_string: 'fake-ip'
+        line: "      addresses: [{{ ip }}/24]"

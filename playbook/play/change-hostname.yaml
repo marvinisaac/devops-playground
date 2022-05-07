@@ -1,0 +1,9 @@
+---
+- name: Change hostname
+  # Requires a target to be set. If no target is defined, nothing is
+  hosts: "{{ target | default('no_host') }}"
+  become: yes
+  tasks:
+    - name: Change hostname
+      ansible.builtin.hostname:
+        name: "{{ host_name }}"

@@ -1,0 +1,6 @@
+- import_playbook: "./play/ubuntu-update.yaml"
+- import_playbook: "./play/change-hostname.yaml"
+- import_playbook: "./play/setup-static-ip.yaml"
+- import_playbook: "./play/setup-docker.yaml"
+- import_playbook: "./play/setup-docker-compose.yaml"
+- import_playbook: "./play/reboot.yaml"
