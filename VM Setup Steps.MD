@@ -8,6 +8,11 @@
     ansible-playbook ./playbook/setup-ubuntu.yaml -K \
         -e "target=core host_name=core user=marvin ip=192.168.1.235"
     ```
+4. Setup services
+    ```
+    ansible-playbook ./playbook/setup-core.yaml -K \
+        -e "target=core user=marvin database_password=<password> slack_webhook=<url>"
+    ```
 
 ## Apps VM
 1. Install Ubuntu 20.04 LTS
