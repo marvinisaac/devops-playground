@@ -1,0 +1,60 @@
+---
+- name: Setup core server
+  # Requires a target to be set. If no target is defined, nothing is
+  hosts: "{{ target | default('no_host') }}"
+  become: yes
+
+  tasks:
+  - name: Create project directories
+    ansible.builtin.file:
+      path: "/home/{{ user }}/core/{{ item }}"
+      state: directory
+      mode: "0755"
+    loop:
+      - database
+      - database/backup
+      - database/data
+      - database/scripts
+      - scheduler
+
+  - name: Copy project files
+    ansible.builtin.copy:
+      src: "../core/{{ item }}"
+      dest: "/home/{{ user }}/core/{{ item }}"
+      owner: "{{ user }}"
+      group: "{{ user }}"
+    loop:
+      - .env.dist
+      - docker-compose.yaml
+      - scheduler/config.template
+
+  - name: Copy project scripts
+    ansible.builtin.copy:
+      src: "../core/{{ item }}"
+      dest: "/home/{{ user }}/core/{{ item }}"
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      mode: a+x
+    loop:
+      - database/scripts/backup.sh
+      - scheduler/startup.sh
+
+  - name: Setup ENV file
+    command: "cp /home/{{ user }}/core/.env.dist /home/{{ user }}/core/.env"
+
+  - name: Set database password
+    ansible.builtin.lineinfile:
+      path: "/home/{{ user }}/core/.env"
+      search_string: "MARIADB_ROOT_PASSWORD"
+      line: "MARIADB_ROOT_PASSWORD=\"{{ database_password }}\""
+
+  - name: Set Slack webhook URL
+    ansible.builtin.lineinfile:
+      path: "/home/{{ user }}/core/.env"
+      search_string: 'SLACK_WEBHOOK'
+      line: "SLACK_WEBHOOK=\"{{ slack_webhook }}\""
+
+  - name: Start core services
+    ansible.builtin.shell: docker-compose up -d
+    args:
+      chdir: "/home/{{ user }}/core"

@@ -1,0 +1,25 @@
+services:
+    database:
+        image: mariadb:10.6
+        environment:
+            MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+        ports:
+            - "3306:3306"
+        restart: always
+        volumes:
+            - ./database/data:/var/lib/mysql
+            - ./database/backup:/backup
+            - ./database/scripts/:/scripts
+
+    scheduler:
+        image: mcuadros/ofelia:latest
+        entrypoint: /bin/sh
+        command: startup.sh
+        environment:
+            MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+            SLACK_WEBHOOK: $SLACK_WEBHOOK
+        restart: always
+        volumes:
+            - ./scheduler/startup.sh:/startup.sh
+            - ./scheduler/config.template:/data/config.template
+            - /var/run/docker.sock:/var/run/docker.sock:ro

@@ -1,0 +1,3 @@
+.env
+core/database/backup
+core/database/data
