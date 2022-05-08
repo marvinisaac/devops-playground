@@ -1,0 +1,63 @@
+services:
+    ##########
+    # Server #
+    ##########
+    server-tunnel:
+        image: cloudflare/cloudflared:2022.5.0
+        container_name: server-tunnel
+        command: tunnel --no-autoupdate run --token $SERVER_TUNNEL_TOKEN
+        restart: always
+
+    server-gateway:
+        image: devopsfaith/krakend:2.0
+        container_name: server-gateway
+        expose:
+            - "8080"
+        restart: always
+        volumes:
+            - ./server/gateway-config.json:/etc/krakend/krakend.json
+
+    server-scheduler:
+        image: mcuadros/ofelia:latest
+        container_name: server-scheduler
+        entrypoint: /bin/sh
+        command: startup.sh
+        environment:
+            SLACK_WEBHOOK: $SLACK_WEBHOOK
+        restart: always
+        volumes:
+            - ./scheduler/startup.sh:/startup.sh
+            - ./scheduler/config.template:/data/config.template
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    ##########
+    # Marvin #
+    ##########
+    marvin-gateway:
+        image: devopsfaith/krakend:2.0
+        container_name: marvin-gateway
+        expose:
+            - "8080"
+        restart: always
+        volumes:
+            - ./marvin/gateway-config.json:/etc/krakend/krakend.json
+
+    marvin-music-nginx:
+        image: ghcr.io/marvinisaac/nginx-api/nginx-api:v1.0.3
+        container_name: marvin-music-nginx
+        depends_on:
+            - marvin-music-php
+        environment:
+            PHP_HOSTNAME: marvin-music-php
+            VIRTUAL_HOST: _
+
+    marvin-music-php:
+        image: ghcr.io/marvinisaac/marvinisaac-music/marvinisaac-music:v0.1.10
+        container_name: marvin-music-php
+        environment:
+            APP_DEBUG: 0
+            APP_ENV: prod
+            APP_SECRET: $MARVIN_MUSIC_APP_SECRET
+            DATABASE_URL: $MARVIN_MUSIC_DATABASE_URL
+            SPOTIFY_ENCODED_SECRET: $MARVIN_MUSIC_SPOTIFY_ENCODED_SECRET
+            SPOTIFY_REFRESH_TOKEN: $MARVIN_MUSIC_SPOTIFY_REFRESH_TOKEN

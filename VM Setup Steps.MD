@@ -22,3 +22,8 @@
     ansible-playbook ./playbook/setup-ubuntu.yaml -K \
         -e "target=apps host_name=apps user=marvin ip=192.168.1.236"
     ```
+4. Setup services
+    ```
+    ansible-playbook ./playbook/setup-apps.yaml -K \
+        -e "target=apps user=marvin token=<token>"
+    ```

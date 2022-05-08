@@ -1,0 +1,19 @@
+{
+    "version": 3,
+    "extra_config": {
+        "github_com/devopsfaith/krakend-cors": {
+            "allow_credentials": false,
+            "allow_headers": ["Accept-Language"],
+            "allow_methods": ["GET", "HEAD"],
+            "allow_origins": ["*"],
+            "debug": false,
+            "expose_headers": [
+                "Content-Length",
+                "Content-Type"
+            ],
+            "max_age": "1h"
+        }
+    },
+    "endpoints": [
+    ]
+}

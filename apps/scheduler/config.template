@@ -1,0 +1,8 @@
+[job-exec "Get recently played from Spotify"]
+; Every hour
+schedule = 0 0 0/1 * * *
+container = marvin-music-php
+command = "bin/console app:get-played"
+
+[global]
+slack-only-on-error = true

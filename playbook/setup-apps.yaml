@@ -1,0 +1,68 @@
+---
+- name: Setup apps server
+  # Requires a target to be set. If no target is defined, nothing is
+  hosts: "{{ target | default('no_host') }}"
+  become: yes
+
+  tasks:
+  - name: Create project directories
+    ansible.builtin.file:
+      path: "/home/{{ user }}/apps/{{ item }}"
+      state: directory
+      mode: "0755"
+    loop:
+      - marvin
+      - scheduler
+      - server
+
+  - name: Copy project files
+    ansible.builtin.copy:
+      src: "../apps/{{ item }}"
+      dest: "/home/{{ user }}/apps/{{ item }}"
+      owner: "{{ user }}"
+      group: "{{ user }}"
+    loop:
+      - .env.dist
+      - docker-compose.yaml
+      - marvin/gateway-config.json
+      - scheduler/config.template
+      - server/gateway-config.json
+
+  - name: Copy project scripts
+    ansible.builtin.copy:
+      src: "../apps/{{ item }}"
+      dest: "/home/{{ user }}/apps/{{ item }}"
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      mode: a+x
+    loop:
+      - scheduler/startup.sh
+      - server/docker-reboot.sh
+
+  - name: Setup ENV file
+    command: "cp /home/{{ user }}/apps/.env.dist /home/{{ user }}/apps/.env"
+
+  - name: Remove Docker reboot task, if present
+    cron:
+      name: "Docker reboot"
+      state: absent
+
+  - name: Schedule reboot of all containers
+    cron:
+      name: "Docker reboot"
+      # Time is in UTC
+      minute: "0"
+      hour: "19"
+      user: "{{ user }}"
+      # Store cron job in /etc/cron.d/docker-reboot
+      cron_file: docker-reboot
+      job: "sh /home/{{ user }}/apps/server/docker-reboot.sh"
+
+  - name: Login to GitHub
+    command: "docker login ghcr.io -u {{ user }} -p {{ token }}"
+
+  # Due to the number of entries, .env setup is manual for now
+  - name: Print reminder for .env file
+    ansible.builtin.debug:
+      msg:
+      - "Do -NOT- forget to fill in details of .env file"
