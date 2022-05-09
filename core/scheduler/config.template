@@ -1,7 +1,7 @@
 [job-exec "database-daily-backup"]
 ; Every hour
 schedule = 0 0 0/1 * * *
-container = core_database_1
+container = database
 command = "/scripts/backup.sh"
 
 [global]

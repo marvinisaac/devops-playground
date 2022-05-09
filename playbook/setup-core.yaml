@@ -5,6 +5,7 @@
   become: yes
 
   tasks:
+
   - name: Create project directories
     ansible.builtin.file:
       path: "/home/{{ user }}/core/{{ item }}"
@@ -53,6 +54,11 @@
       path: "/home/{{ user }}/core/.env"
       search_string: 'SLACK_WEBHOOK'
       line: "SLACK_WEBHOOK=\"{{ slack_webhook }}\""
+
+  - name: Stop core services, if there's any running
+    ansible.builtin.shell: docker-compose down
+    args:
+      chdir: "/home/{{ user }}/core"
 
   - name: Start core services
     ansible.builtin.shell: docker-compose up -d
