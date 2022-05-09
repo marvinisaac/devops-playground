@@ -52,7 +52,7 @@ services:
             VIRTUAL_HOST: _
 
     marvin-music-php:
-        image: ghcr.io/marvinisaac/marvinisaac-music/marvinisaac-music:v0.1.10
+        image: ghcr.io/marvinisaac/marvinisaac-music/marvinisaac-music:v0.1.12
         container_name: marvin-music-php
         environment:
             APP_DEBUG: 0

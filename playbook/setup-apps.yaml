@@ -39,9 +39,6 @@
       - scheduler/startup.sh
       - server/docker-reboot.sh
 
-  - name: Setup ENV file
-    command: "cp /home/{{ user }}/apps/.env.dist /home/{{ user }}/apps/.env"
-
   - name: Remove Docker reboot task, if present
     cron:
       name: "Docker reboot"
@@ -50,7 +47,7 @@
   - name: Schedule reboot of all containers
     cron:
       name: "Docker reboot"
-      # Time is in UTC
+      # 3 AM PHT
       minute: "0"
       hour: "19"
       user: "{{ user }}"

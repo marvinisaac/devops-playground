@@ -4,5 +4,5 @@
 cd /home/marvin/apps
 
 # Call the file itself, cron can't handle "docker-compose"
-/usr/local/bin/docker-compose down -v --remove-orphans
+/usr/local/bin/docker-compose down --remove-orphans
 /usr/local/bin/docker-compose up -d
