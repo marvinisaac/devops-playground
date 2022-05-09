@@ -19,12 +19,12 @@
     ansible-playbook ./playbook/setup-ubuntu-digitalocean.yaml -K \
         -e "target=do_new user=marvin"
     ```
-6. Setup services
+6. Move server from `[do_new]` to `[do_core]`
+7. Setup services
     ```
     ansible-playbook ./playbook/setup-core.yaml -K \
-        -e "target=do_new user=marvin database_password=<password> slack_webhook=<url>"
+        -e "target=do_core user=marvin database_password=<password> slack_webhook=<url>"
     ```
-7. Move server from `[do_new]` to `[do_core]`
 
 ## Apps Server
 1. Add the SSH details to `~/.ssh/config`
@@ -41,9 +41,9 @@
     ansible-playbook ./playbook/setup-ubuntu-digitalocean.yaml -K \
         -e "target=do_new user=marvin"
     ```
-6. Setup services
+6. Move server from `[do_new]` to `[do_apps]`
+7. Setup services
     ```
     ansible-playbook ./playbook/setup-apps.yaml -K \
-        -e "target=do_new user=marvin token=<token>"
+        -e "target=do_apps user=marvin token=<token>"
     ```
-7. Move server from `[do_new]` to `[do_apps]`
