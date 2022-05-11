@@ -2,5 +2,6 @@ services:
     tunnel:
         image: cloudflare/cloudflared:2022.5.1
         container_name: tunnel
+        network_mode: bridge
         command: tunnel --no-autoupdate run --token $TUNNEL_TOKEN
         restart: always

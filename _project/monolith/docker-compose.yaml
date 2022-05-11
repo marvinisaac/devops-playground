@@ -5,9 +5,11 @@ services:
     portainer:
         image: portainer/portainer-ce:2.13.1-alpine
         container_name: portainer
+        network_mode: bridge
+        expose:
+            - "9443"
         ports:
             - "8000:8000"
-            - "9443:9443"
         restart: always
         volumes:
             - portainer_data:/data
