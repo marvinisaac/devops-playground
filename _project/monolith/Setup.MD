@@ -14,3 +14,5 @@
         "
     ```
 2. Portainer (via Docker Compose)
+3. Cloudflare Tunnel (via Portainer GitOps)
+    - Access Portainer via FQDN instead of IP + port
