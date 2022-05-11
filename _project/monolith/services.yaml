@@ -1,6 +1,6 @@
 services:
     tunnel:
-        image: cloudflare/cloudflared:2022.7.0
+        image: cloudflare/cloudflared:2022.5.1
         container_name: tunnel
         command: tunnel --no-autoupdate run --token $TUNNEL_TOKEN
         restart: always
