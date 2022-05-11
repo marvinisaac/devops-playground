@@ -1,3 +1,7 @@
+networks:
+    monolith:
+        name: monolith
+
 volumes:
     portainer_data:
 
@@ -5,7 +9,8 @@ services:
     portainer:
         image: portainer/portainer-ce:2.13.1-alpine
         container_name: portainer
-        network_mode: bridge
+        networks:
+            - monolith
         expose:
             - "9443"
         ports:
