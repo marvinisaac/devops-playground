@@ -20,6 +20,12 @@
         group: root
         mode: '0644'
 
+    - name: Set interface
+      ansible.builtin.lineinfile:
+        path: /etc/netplan/00-installer-config.yaml
+        search_string: 'interface-name'
+        line: "    {{ interface | default('enp0s3') }}:"
+
     - name: Set static IP
       ansible.builtin.lineinfile:
         path: /etc/netplan/00-installer-config.yaml

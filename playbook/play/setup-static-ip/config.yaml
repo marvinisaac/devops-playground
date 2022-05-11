@@ -1,7 +1,7 @@
 network:
   version: 2
   ethernets:
-    enp0s3:
+    interface-name:
       addresses: [fake-ip/24]
       gateway4: 192.168.1.1
       nameservers:
