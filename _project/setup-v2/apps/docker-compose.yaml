@@ -1,3 +1,6 @@
+# volumes:
+#     rabbitmq-data:
+
 services:
     ##########
     # Server #
@@ -29,6 +32,22 @@ services:
             - ./scheduler/startup.sh:/startup.sh
             - ./scheduler/config.template:/data/config.template
             - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    # server-message-queue:
+    #     image: rabbitmq:3-management-alpine
+    #     container_name: server-message-queue
+    #     hostname: server-message-queue
+    #     restart: always
+    #     environment:
+    #         - RABBITMQ_DEFAULT_USER=$RABBITMQ_DEFAULT_USER
+    #         - RABBITMQ_DEFAULT_PASS=$RABBITMQ_DEFAULT_PASS
+    #     volumes:
+    #         - rabbitmq-data:/var/lib/rabbitmq/mnesia/
+    #         - ./server/rabbitmq-config.conf:/etc/rabbitmq/rabbitmq.conf
+    #     expose:
+    #         - "5672"
+    #     ports:
+    #         - "15672:15672"
 
     ##########
     # Marvin #
