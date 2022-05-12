@@ -9,3 +9,10 @@ services:
         container_name: tunnel
         command: tunnel --no-autoupdate run --token $TUNNEL_TOKEN
         restart: always
+
+    server-gateway:
+        image: ghcr.io/marvinisaac/api-gateway/api-gateway:server-v0.1.1
+        container_name: server-gateway
+        expose:
+            - "8080"
+        restart: always

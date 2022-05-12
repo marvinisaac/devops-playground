@@ -1,6 +1,6 @@
 # Monolith Setup
 
-## Priority List
+## Priority List and Notes
 1. Server (via Ansible)
     ```
     ansible-playbook \
@@ -16,3 +16,6 @@
 2. Portainer (via Docker Compose)
 3. Cloudflare Tunnel (via Portainer GitOps)
     - Access Portainer via FQDN instead of IP + port
+    - Aside from username + password, must be protected via Cloudflare firewall rules
+4. API gateway
+    - Config is built into the image via custom Dockerfile
