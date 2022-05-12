@@ -34,7 +34,7 @@ services:
             - database_backup:/backup
 
     scheduler:
-        image: ghcr.io/marvinisaac/devops-playground/database:v0.1.19
+        image: ghcr.io/marvinisaac/devops-playground/scheduler:v0.1.19
         container_name: scheduler
         environment:
             MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
