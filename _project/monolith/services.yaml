@@ -4,6 +4,7 @@ networks:
             name: monolith
 
 volumes:
+    database_backup:
     database_data:
 
 services:
@@ -29,5 +30,5 @@ services:
             - "3306:3306"
         restart: always
         volumes:
-            - database_data/data:/var/lib/mysql
-            - database_data/backup:/backup
+            - database_data:/var/lib/mysql
+            - database_backup:/backup
