@@ -3,6 +3,9 @@ networks:
         external:
             name: monolith
 
+volumes:
+    database_data:
+
 services:
     tunnel:
         image: cloudflare/cloudflared:2022.5.1
@@ -16,3 +19,15 @@ services:
         expose:
             - "8080"
         restart: always
+
+    database:
+        image: ghcr.io/marvinisaac/devops-playground/database:v0.1.18
+        container_name: database
+        environment:
+            MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+        ports:
+            - "3306:3306"
+        restart: always
+        volumes:
+            - database_data/data:/var/lib/mysql
+            - database_data/backup:/backup
