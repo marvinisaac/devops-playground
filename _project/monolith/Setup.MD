@@ -19,3 +19,5 @@
     - Aside from username + password, must be protected via Cloudflare firewall rules
 4. API gateway
     - Config is built into the image via custom Dockerfile
+5. Database
+    - Named volumes will be real volumes for DigitalOcean version
