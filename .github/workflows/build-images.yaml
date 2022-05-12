@@ -16,7 +16,7 @@ jobs:
     - name: Build and push package
       uses: docker/build-push-action@v2
       with:
-        context: ./_project/monolith
+        context: "{{defaultContext}}:_project/monolith"
         target: server
         push: true
         tags: server-gateway-${{ github.ref_name }}
