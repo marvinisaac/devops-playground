@@ -17,11 +17,11 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build the Docker image
-      run: docker build . --file _project/monolith/Dockerfile --target server
-    - name: Push package
-      uses: docker/build-push-action@v1
+    - name: Build and push package
+      uses: docker/build-push-action@v2
       with:
+        context: ./_project/monolith
+        target: server
         repository: marvinisaac/devops-playground/devops-playground
         tags: server-gateway-${{ github.ref_name }}
         registry: ghcr.io
