@@ -7,4 +7,4 @@ COPY ./_project/monolith/image/script/database /script
 FROM mcuadros/ofelia:v0.3.6 AS scheduler
 COPY ./_project/monolith/image/config/scheduler/config.template /data/config.template
 COPY ./_project/monolith/image/script/scheduler/startup.sh /startup.sh
-CMD ["startup.sh"]
+RUN /startup.sh
