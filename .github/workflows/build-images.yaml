@@ -55,3 +55,28 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GH_ACTIONS }}
+
+  scheduler:
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v2
+    -
+      name: Login to GitHub
+      uses: docker/login-action@v1.6.0
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    -
+      name: Build and push package
+      uses: docker/build-push-action@v1
+      with:
+        dockerfile: ./_project/monolith/Dockerfile
+        target: scheduler
+        repository: marvinisaac/devops-playground/scheduler
+        tag_with_ref: true
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GH_ACTIONS }}
