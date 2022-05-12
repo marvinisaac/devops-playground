@@ -22,4 +22,4 @@ jobs:
         file: ./_project/monolith/Dockerfile
         target: server
         push: true
-        tags: server-gateway-${{ github.ref_name }}
+        tags: ghcr.io/marvinisaac/devops-playground/server-gateway:${{ github.ref_name }}
