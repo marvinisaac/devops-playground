@@ -25,7 +25,7 @@ jobs:
       with:
         dockerfile: ./_project/monolith/Dockerfile
         target: server-gateway
-        repository: marvinsiaac/devops-playground/server-gateway
+        repository: marvinisaac/devops-playground/server-gateway
         tag_with_ref: true
         registry: ghcr.io
         username: ${{ github.actor }}
