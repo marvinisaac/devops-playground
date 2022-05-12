@@ -21,3 +21,5 @@
     - Config is built into the image via custom Dockerfile
 5. Database
     - Named volumes will be real volumes for DigitalOcean version
+6. Scheduler
+    - Run database backup every 6 hours
