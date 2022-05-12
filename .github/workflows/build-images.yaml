@@ -9,23 +9,24 @@ jobs:
   server-gateway:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    -
+      name: Checkout
       uses: actions/checkout@v2
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Login to GitHub
+    -
+      name: Login to GitHub
       uses: docker/login-action@v1.6.0
       with:
         registry: ghcr.io
-        username: ${{ github.repository_owner }}
+        username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and push package
-      uses: docker/build-push-action@v2
+    -
+      name: Build and push package
+      uses: docker/build-push-action@v1
       with:
-        context: .
-        file: ./_project/monolith/Dockerfile
-        target: server
-        push: true
-        tags: ghcr.io/marvinisaac/devops-playground/server-gateway:${{ github.ref_name }}
+        dockerfile: ./_project/monolith/Dockerfile
+        target: server-gateway
+        repository: marvinsiaac/devops-playground/server-gateway
+        tag_with_ref: true
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
