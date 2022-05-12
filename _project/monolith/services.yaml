@@ -32,3 +32,13 @@ services:
         volumes:
             - database_data:/var/lib/mysql
             - database_backup:/backup
+
+    scheduler:
+        image: ghcr.io/marvinisaac/devops-playground/database:v0.1.19
+        container_name: scheduler
+        environment:
+            MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+            SLACK_WEBHOOK: $SLACK_WEBHOOK
+        restart: always
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
