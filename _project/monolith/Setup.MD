@@ -23,3 +23,6 @@
     - Named volumes will be real volumes for DigitalOcean version
 6. Scheduler
     - Run database backup every 6 hours
+    - Run `bin/console app:get-played` in `marvin-music-php` every hour
+7. marvinisaac.com | gateway
+8. marvinisaac.com | music microservice
