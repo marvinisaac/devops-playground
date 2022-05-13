@@ -1,0 +1,14 @@
+[job-exec "database-daily-backup"]
+; Every 6 hours
+schedule = 0 0 0/6 * * *
+container = database
+command = "/script/backup.sh"
+
+[job-exec "database-test"]
+; Every 5 minutes
+schedule = 0 0/5 * * * *
+container = database
+command = "echo $(date)"
+
+[global]
+slack-only-on-error = true

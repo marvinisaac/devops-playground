@@ -65,3 +65,26 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GH_ACTIONS }}
+
+  scheduler:
+    if: contains(github.event.release.body, 'scheduler')
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v2
+    -
+      name: Set variables
+      run: |
+        VERSION=$(cat ./_project/monolith/image/scheduler/VERSION)
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+    -
+      name: Build and push package
+      uses: docker/build-push-action@v1
+      with:
+        dockerfile: ./_project/monolith/image/scheduler/Dockerfile
+        repository: marvinisaac/devops-playground/scheduler
+        tags: ${{ env.VERSION }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GH_ACTIONS }}
