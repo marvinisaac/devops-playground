@@ -7,6 +7,7 @@ on:
 
 jobs:
   server-gateway:
+    if: contains(github.event.release.body, 'server-gateway')
     runs-on: ubuntu-latest
     steps:
     -
@@ -20,63 +21,17 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     -
+      name: Set variables
+      run: |
+        VERSION=$(cat ./_project/monolith/image/server-gateway/VERSION)
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+    -
       name: Build and push package
       uses: docker/build-push-action@v1
       with:
-        dockerfile: ./_project/monolith/Dockerfile
-        target: server-gateway
+        dockerfile: ./_project/monolith/image/server-gateway/Dockerfile
         repository: marvinisaac/devops-playground/server-gateway
-        tag_with_ref: true
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GH_ACTIONS }}
-
-  database:
-    runs-on: ubuntu-latest
-    steps:
-    -
-      name: Checkout
-      uses: actions/checkout@v2
-    -
-      name: Login to GitHub
-      uses: docker/login-action@v1.6.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    -
-      name: Build and push package
-      uses: docker/build-push-action@v1
-      with:
-        dockerfile: ./_project/monolith/Dockerfile
-        target: database
-        repository: marvinisaac/devops-playground/database
-        tag_with_ref: true
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GH_ACTIONS }}
-
-  scheduler:
-    runs-on: ubuntu-latest
-    steps:
-    -
-      name: Checkout
-      uses: actions/checkout@v2
-    -
-      name: Login to GitHub
-      uses: docker/login-action@v1.6.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    -
-      name: Build and push package
-      uses: docker/build-push-action@v1
-      with:
-        dockerfile: ./_project/monolith/Dockerfile
-        target: scheduler
-        repository: marvinisaac/devops-playground/scheduler
-        tag_with_ref: true
+        tags: ${{ env.VERSION }}
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GH_ACTIONS }}
