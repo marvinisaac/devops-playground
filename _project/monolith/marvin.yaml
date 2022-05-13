@@ -1,0 +1,32 @@
+networks:
+    default:
+        external:
+            name: monolith
+
+services:
+    marvin-gateway:
+        image: ghcr.io/marvinisaac/marvinisaac-gateway:0.1.0
+        container_name: marvin-gateway
+        expose:
+            - "8080"
+        restart: always
+
+    marvin-music-nginx:
+        image: ghcr.io/marvinisaac/nginx-api/nginx-api:v1.0.3
+        container_name: marvin-music-nginx
+        depends_on:
+            - marvin-music-php
+        environment:
+            PHP_HOSTNAME: marvin-music-php
+            VIRTUAL_HOST: _
+
+    marvin-music-php:
+        image: ghcr.io/marvinisaac/marvinisaac-music/marvinisaac-music:v0.1.12
+        container_name: marvin-music-php
+        environment:
+            APP_DEBUG: 0
+            APP_ENV: prod
+            APP_SECRET: $MARVIN_MUSIC_APP_SECRET
+            DATABASE_URL: $MARVIN_MUSIC_DATABASE_URL
+            SPOTIFY_ENCODED_SECRET: $MARVIN_MUSIC_SPOTIFY_ENCODED_SECRET
+            SPOTIFY_REFRESH_TOKEN: $MARVIN_MUSIC_SPOTIFY_REFRESH_TOKEN
