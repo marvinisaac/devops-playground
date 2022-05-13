@@ -22,7 +22,7 @@ services:
         restart: always
 
     database:
-        image: ghcr.io/marvinisaac/devops-playground/database:v0.1.18
+        image: ghcr.io/marvinisaac/devops-playground/database:0.2.0
         container_name: database
         environment:
             MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
