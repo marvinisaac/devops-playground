@@ -15,7 +15,7 @@ services:
         restart: always
 
     server-gateway:
-        image: ghcr.io/marvinisaac/devops-playground/server-gateway:v0.1.17
+        image: ghcr.io/marvinisaac/devops-playground/server-gateway:v0.2.0
         container_name: server-gateway
         expose:
             - "8080"
