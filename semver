@@ -1,6 +1,9 @@
 #!/bin/sh
 
 case $1 in
+    "scheduler")
+        VERSION_FILE="_project/monolith/image/scheduler/VERSION"
+        ;;
     "server-gateway")
         VERSION_FILE="_project/monolith/image/server-gateway/VERSION"
         ;;

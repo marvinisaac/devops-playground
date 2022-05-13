@@ -1,14 +1,14 @@
-[job-exec "database-daily-backup"]
+[job-exec "Database backup"]
 ; Every 6 hours
 schedule = 0 0 0/6 * * *
 container = database
 command = "/script/backup.sh"
 
-[job-exec "database-test"]
-; Every 5 minutes
-schedule = 0 0/5 * * * *
-container = database
-command = "echo $(date)"
+[job-exec "Get Spotify recently played"]
+; Every hour
+schedule = 0 0 0/1 * * *
+container = marvin-music-php
+command = "bin/console app:get-played"
 
 [global]
 slack-only-on-error = true
