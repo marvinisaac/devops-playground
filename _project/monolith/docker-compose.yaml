@@ -13,8 +13,6 @@ services:
             - monolith
         expose:
             - "9443"
-        ports:
-            - "8000:8000"
         restart: always
         volumes:
             - portainer_data:/data
