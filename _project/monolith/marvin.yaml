@@ -16,6 +16,7 @@ services:
         container_name: marvin-music-nginx
         depends_on:
             - marvin-music-php
+        restart: always
         environment:
             PHP_HOSTNAME: marvin-music-php
             VIRTUAL_HOST: _
@@ -23,6 +24,7 @@ services:
     marvin-music-php:
         image: ghcr.io/marvinisaac/marvinisaac-music/marvinisaac-music:v0.1.12
         container_name: marvin-music-php
+        restart: always
         environment:
             APP_DEBUG: 0
             APP_ENV: prod
