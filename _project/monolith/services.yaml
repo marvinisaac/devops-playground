@@ -6,6 +6,7 @@ networks:
 volumes:
     database_backup:
     database_data:
+    nocodb:
 
 services:
     tunnel:
@@ -42,3 +43,14 @@ services:
         restart: always
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    nocodb:
+        image: nocodb/nocodb:0.90.11
+        container_name: nocodb
+        expose:
+            - "8080"
+        restart: always
+        volumes:
+            - nocodb:/usr/app/data
+        environment:
+            NC_DB: $NOCODB
