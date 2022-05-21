@@ -54,3 +54,19 @@ services:
             - nocodb:/usr/app/data
         environment:
             NC_DB: $NOCODB
+
+    shlink:
+        image: shlinkio/shlink:stable
+        container_name: shlink
+        environment:
+            DEFAULT_DOMAIN: $SHLINK_DEFAULT_DOMAIN
+            IS_HTTPS_ENABLED: "false"
+            GEOLITE_LICENSE_KEY: $SHLINK_GEOLITE_LICENSE_KEY
+            DB_DRIVER: "mysql"
+            DB_HOST: $SHLINK_DB_HOST
+            DB_NAME: $SHLINK_DB_NAME
+            DB_PASSWORD: $SHLINK_DB_PASSWORD
+            DB_USER: $SHLINK_DB_USER
+        expose:
+            - "8080"
+        restart: always
